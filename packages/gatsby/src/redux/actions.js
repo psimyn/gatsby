@@ -194,7 +194,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
     if (!fileExistsSync(page.component)) {
-      const message = `${name} created a page with a component that doesn't exist. Missing component is ${
+      let message;
+      if (!page.component) {
+        message = `Page is missing templateKey in frontmatter`
+      } else {
+        message = `${name} created a page with a component that doesn't exist. Missing component is ${
         page.component
       }`
       console.log(``)
